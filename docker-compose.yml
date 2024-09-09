@@ -11,6 +11,7 @@ services:
             - .:/var/www/example
         depends_on:
             - mysql
+            - redis
 
     mysql:
         image: mysql:8.0
@@ -38,6 +39,14 @@ services:
         depends_on:
             - mysql
 
+    redis:
+        image: redis:alpine
+        container_name: redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis_data:/data
+
     webserver:
         image: nginx:alpine
         container_name: nginx_webserver
@@ -51,3 +60,4 @@ services:
 
 volumes:
     db_data:
+    redis_data:

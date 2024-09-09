@@ -4,7 +4,7 @@ FROM php:8.1-fpm
 # 2. Set working directory
 WORKDIR /var/www/example
 
-# 3. Install system dependencies
+# 3. Install system dependencies and Redis extension
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -13,7 +13,9 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     git \
-    curl
+    curl \
+    && pecl install redis \
+    && docker-php-ext-enable redis
 
 # 4. Install PHP extensions required by Laravel
 RUN docker-php-ext-install pdo pdo_mysql gd zip exif pcntl
@@ -27,8 +29,8 @@ COPY . /var/www/example
 # 7. Install Composer dependencies
 RUN composer update
 
-# 9. Expose the application port (for Nginx to use)
+# 8. Expose the application port (for Nginx to use)
 EXPOSE 9000
 
-# 10. Specify the command to run when the container starts
+# 9. Specify the command to run when the container starts
 CMD ["php-fpm"]
