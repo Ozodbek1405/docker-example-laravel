@@ -32,7 +32,7 @@ services:
         container_name: phpmyadmin_example
         restart: always
         environment:
-            PMA_HOST: mysql
+            PMA_HOST: mysql_example
             MYSQL_ROOT_PASSWORD: root-password
         ports:
             - "8086:80"
