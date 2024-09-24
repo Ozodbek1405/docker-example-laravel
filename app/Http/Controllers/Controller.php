@@ -14,9 +14,7 @@ class Controller extends BaseController
 
     public function users()
     {
-        $users = Cache::remember('all_users', 60, function () {
-            return User::query()->paginate(20);
-        });
+        $users = User::query()->paginate(20);
 
         return view('users', ['users' => $users]);
     }
